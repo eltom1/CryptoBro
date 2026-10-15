@@ -1,6 +1,6 @@
 apis_secretas.py
-control_bot.py
-
-control_bot.py
-apis_secretas.py
 cotrol_bot.py
+data.db
+.env
+.venv/
+__pycache__/
