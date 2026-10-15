@@ -26,11 +26,9 @@ async def cotizacion(update: Update, tcontext: ContextTypes.DEFAULT_TYPE):
 
         #llamo a los valores de dolar blue y oficial 
         
-        blue = next(item["venta"]
-                    for item in datos if item["nombre"] == "Dolar Blue")
-        
-        oficial = next(item["venta"] 
-                    for item in datos if item["nombre"] == "Dolar Oficial")
+        blue = datos["blue"]["venta"]
+        oficial = datos["oficial"]["venta"]
+
 
         # tambien se puede agregar el dolar cripto, tarjeta, mayorista, bolsa, etc :)
 
@@ -38,7 +36,7 @@ async def cotizacion(update: Update, tcontext: ContextTypes.DEFAULT_TYPE):
             f"cotizacion del dolar en pesos Arg\n"
             f"Dolar Oficial: ${oficial}\n"
             f"Dolar Blue: ${blue}\n"
-            f"Datos obtenidos de https://dolarapi.com/v1/dolares"
+            f"Datos obtenidos de https://api.bluelytics.com.ar/v2/latest" 
         )
 
         await update.message.reply_text(mensaje, parse_mode= "Markdown")
