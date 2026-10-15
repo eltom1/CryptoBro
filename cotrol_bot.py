@@ -18,16 +18,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def hola(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("hola!! , que activo queres consultar hoy?")
 
-async def cotizacion(update: Update, tcontext: ContextTypes.DEFAULT_TYPE):
+async def cotizacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         #busca la api de dolarapi(api gratis que te meustra el valor en tiempo real del dolar)
-        valor = requests.get("https://dolarapi.com/v1/dolares")
+        valor = requests.get("https://api.bluelytics.com.ar/v2/latest",timeout=10) #el timeout de 10 seg para q no quede esperando 
         datos = valor.json()
+
+        print("DATOS RECIBIDOS DE LA API:", datos)
 
         #llamo a los valores de dolar blue y oficial 
         
-        blue = datos["blue"]["venta"]
-        oficial = datos["oficial"]["venta"]
+        blue = datos["blue"]["value_sell"]
+        oficial = datos["oficial"]["value_sell"]
 
 
         # tambien se puede agregar el dolar cripto, tarjeta, mayorista, bolsa, etc :)
@@ -41,10 +43,14 @@ async def cotizacion(update: Update, tcontext: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(mensaje, parse_mode= "Markdown")
 
+    except requests.exceptions.ConnectionError:
+        await update.message.reply_text("no tenes internet bro, revisa la conexion del servidor o la tuya crack")
+        
     except Exception as Nombre_Del_error:
-        print(f"error: {Nombre_del_error}")
+        print(f"error: {Nombre_Del_error}")
         await update.message.reply_text("Ocurrio un error reintenta en un par de minutos :(")
 
+    
 
 if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
@@ -56,5 +62,4 @@ if __name__ == "__main__":
 
     print("Estado del Bot-Encendido")
     app.run_polling()
-
 
