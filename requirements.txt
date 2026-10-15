@@ -1,1 +1,4 @@
-import telegram 
+librerirass de python 
+
+python-telegram-bot
+pandas
