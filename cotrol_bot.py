@@ -1,7 +1,7 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-from apis_secretas import TOKEN
-import requests
+from telegram import Update  #acceder a info de msj de telegram
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes #herramientas para el bot
+from apis_secretas import TOKEN #api escondida que maneja el bot
+import requests  #solicitudes de las apis
 
 
 #============== COMANDOS DEL BOT ============================
@@ -24,9 +24,8 @@ async def cotizacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
         valor = requests.get("https://api.bluelytics.com.ar/v2/latest",timeout=10) #el timeout de 10 seg para q no quede esperando 
         datos = valor.json()
 
-        print("DATOS RECIBIDOS DE LA API:", datos)
+        #print("DATOS RECIBIDOS DE LA API:", datos)
 
-        #llamo a los valores de dolar blue y oficial 
         
         # precio de venta -> si vos le queres comprar al banco o entidad financiera 
         # precio de compra -> si vos queres vender
@@ -37,6 +36,7 @@ async def cotizacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # tambien se puede agregar el dolar cripto, tarjeta, mayorista, bolsa, etc :)
 
+        #mensaje de salida
         mensaje = (
             f"Cotizaciones Dolar y Euro Actualizadas \n"
             f"Dolar Oficial: ${dolar_oficial}\n"
@@ -46,11 +46,13 @@ async def cotizacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"Datos obtenidos de Bluelytics" 
         )
 
-        await update.message.reply_text(mensaje, parse_mode= "Markdown") #print del msj
+        await update.message.reply_text(mensaje, parse_mode= "Markdown") #printde msj, parse_mode para interepretar el md
 
+    #excepcion de error de conexion 
     except requests.exceptions.ConnectionError:
         await update.message.reply_text("no tenes internet bro, revisa la conexion del servidor o la tuya crack")
-        
+
+    #exceepcion de error no declarado
     except Exception as Nombre_Del_error:
         print(f"error: {Nombre_Del_error}")
         await update.message.reply_text("Ocurrio un error reintenta en un par de minutos :(")
@@ -58,7 +60,8 @@ async def cotizacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
 
 if __name__ == "__main__":
-    app = ApplicationBuilder().token(TOKEN).build()
+
+    app = ApplicationBuilder().token(TOKEN).build() #construye el bot usando el token
 
     app.add_handler(CommandHandler("start", start)) 
     app.add_handler(CommandHandler("hola", hola))
