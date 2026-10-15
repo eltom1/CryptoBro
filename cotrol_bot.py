@@ -28,20 +28,25 @@ async def cotizacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         #llamo a los valores de dolar blue y oficial 
         
-        blue = datos["blue"]["value_sell"]
-        oficial = datos["oficial"]["value_sell"]
-
+        # precio de venta -> si vos le queres comprar al banco o entidad financiera 
+        # precio de compra -> si vos queres vender
+        dolar_blue = datos["blue"]["value_sell"]
+        dolar_oficial = datos["oficial"]["value_sell"]
+        euro_oficial = datos["oficial_euro"]["value_sell"]
+        euro_blue = datos["blue_euro"]["value_sell"]
 
         # tambien se puede agregar el dolar cripto, tarjeta, mayorista, bolsa, etc :)
 
         mensaje = (
-            f"cotizacion del dolar en pesos Arg\n"
-            f"Dolar Oficial: ${oficial}\n"
-            f"Dolar Blue: ${blue}\n"
-            f"Datos obtenidos de https://api.bluelytics.com.ar/v2/latest" 
+            f"Cotizaciones Dolar y Euro Actualizadas \n"
+            f"Dolar Oficial: ${dolar_oficial}\n"
+            f"Dolar Blue: ${dolar_blue}\n"
+            f"Euro Oficial: {euro_oficial} €\n"
+            f"Euro Blue: {euro_blue} €\n"
+            f"Datos obtenidos de Bluelytics" 
         )
 
-        await update.message.reply_text(mensaje, parse_mode= "Markdown")
+        await update.message.reply_text(mensaje, parse_mode= "Markdown") #print del msj
 
     except requests.exceptions.ConnectionError:
         await update.message.reply_text("no tenes internet bro, revisa la conexion del servidor o la tuya crack")
