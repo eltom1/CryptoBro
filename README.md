@@ -33,7 +33,7 @@ CrypToBro es un asistente financiero de Telegram. Su objetivo es facilitar la re
 
 ## Roadmap develop
 - [x] Conexión básica con Telegram Bot API.
-- [x] Implementación de cotizaciones de Dólar local en tiempo real (Blue, Oficial).
+- [x] Implementación de cotizaciones de Dólar local en tiempo real (Blue, Oficial).  -- 15/10/26
 - [ ] Integración de precios de Criptomonedas en tiempo real vía API de Binance.
 - [ ] Implementación de consulta de Acciones globales y ETFs vía Yahoo Finance.
 - [ ] Desarrollo de un sistema de Watchlist para seguimiento de activos personalizados.
